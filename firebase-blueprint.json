@@ -1,0 +1,71 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile data",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "name": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email"]
+    },
+    "FavoriteScholarship": {
+      "title": "FavoriteScholarship",
+      "description": "User's favorite scholarship",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "scholarshipName": { "type": "string" },
+        "country": { "type": "string" },
+        "fundingCoverage": { "type": "string" },
+        "degreeLevel": { "type": "string" }
+      },
+      "required": ["userId", "scholarshipName"]
+    },
+    "ApplicationStatus": {
+      "title": "ApplicationStatus",
+      "description": "User's application status for a specific scholarship",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "scholarshipName": { "type": "string" },
+        "status": { "type": "string", "enum": ["Applied", "Interviewing", "Accepted", "Rejected", "None"] },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "scholarshipName", "status"]
+    },
+    "ChatMessage": {
+      "title": "ChatMessage",
+      "description": "Chat message history for a user",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "role": { "type": "string", "enum": ["user", "model", "system"] },
+        "content": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "role", "content", "createdAt"]
+    }
+  },
+  "firestore": {
+    "users/{userId}": {
+      "schema": "User",
+      "description": "User profiles"
+    },
+    "users/{userId}/favorites/{favoriteId}": {
+      "schema": "FavoriteScholarship",
+      "description": "User's favorite scholarships"
+    },
+    "users/{userId}/applications/{applicationId}": {
+      "schema": "ApplicationStatus",
+      "description": "User's application statuses"
+    },
+    "users/{userId}/chatMessages/{messageId}": {
+      "schema": "ChatMessage",
+      "description": "User's chat history"
+    }
+  }
+}
